@@ -22,7 +22,7 @@ copyright = '2022, Pandia 3D GmbH'
 author = 'Pandia 3D'
 
 # The full version, including alpha/beta/rc tags
-release = 'v1'
+release = 'v1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -51,6 +51,11 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'alabaster'
+
+html_theme_options = {
+    'description' : "Pandia 3D's Public Documentation",
+    'logo': 'Logo_Pandia3DV6.png',
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

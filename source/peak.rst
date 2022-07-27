@@ -2,7 +2,7 @@
 Pandia Peak Endpoints
 =====================
 
-These are the endpoints of the Pandia Peak software. The endpoints require that the system is activated and set up via GUI.
+These are HTTP request endpoints of Pandia Peak's API. They require that the system is activated and set up via GUI.
 
 .. toctree::
    :maxdepth: 2
