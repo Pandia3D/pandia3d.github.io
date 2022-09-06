@@ -1,6 +1,6 @@
-=====================
-Pandia Peak Endpoints
-=====================
+==============
+Peak Endpoints
+==============
 
 These are HTTP request endpoints of Pandia Peak's API. They require that the system is activated and set up via GUI.
 

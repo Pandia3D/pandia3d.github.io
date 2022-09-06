@@ -51,10 +51,10 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'alabaster'
-
 html_theme_options = {
     'description' : "Pandia 3D's Public Documentation",
     'logo': 'Logo_Pandia3DV6.png',
+    'sidebar_collapse': False,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

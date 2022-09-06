@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source VirtualEnv/bin/activate
+rm -r build/
 make html
 rm -r docs/
 mkdir -p docs/

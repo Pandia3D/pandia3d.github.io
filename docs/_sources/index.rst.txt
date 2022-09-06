@@ -6,6 +6,7 @@ Welcome to Pandia 3D's documentation!
    :maxdepth: 2
    
    peak
+   peak_beltspeed
    .. example
 
 

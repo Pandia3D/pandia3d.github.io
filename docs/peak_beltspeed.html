@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Peak Belt Speed &#8212; Pandia 3D v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="FlowGet" href="peak_endpoints/FlowGet.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="peak-belt-speed">
+<h1>Peak Belt Speed<a class="headerlink" href="#peak-belt-speed" title="Permalink to this heading">¶</a></h1>
+<p>Pandia Peak offers the functionality to set the conveyor belt speed manually OR fetch and set it dynamically via automatic HTTP requests to a server.</p>
+<p>Here is a python code example of a simple Flask server endpoint that provides the current belt speed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># note: CurrentBeltSpeed is in m/s</span>
+<span class="nd">@system</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/getBeltSpeed&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getBeltSpeed</span><span class="p">():</span>
+   <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;BeltSpeed&quot;</span> <span class="p">:</span> <span class="n">CurrentBeltSpeed</span> <span class="p">}</span>
+   <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The response-content from the server that holds the current belt speed needs to be in JSON format with a “BeltSpeed” key/value pair.
+The belt speed unit is m/s.</p>
+<p>The HTTP GET request that Pandia Peak sends is configurable in the GUI, where you can set the server’s IPv4 address, Port and the endpoint name.
+The requests are sent in a configurable rate (default: 5s) while measuring volume flow, so that the used belt speed is always up to date.</p>
+<p>Here is an example of a HTTP GET request that Pandia Peak sends (depends on the aforementioned configuration) and the response with the required JSON “BeltSpeed” key/value pair:</p>
+<dl class="http get">
+<dt class="sig sig-object http" id="get--getBeltSpeed">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/getBeltSpeed</span></span><a class="headerlink" href="#get--getBeltSpeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current belt speed in m/s.</p>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/getBeltSpeed</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">192.168.2.100:5555</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Access-Control-Allow-Origin</span><span class="o">:</span> <span class="l">*</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">18</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Date</span><span class="o">:</span> <span class="l">Tue, 06 Sep 2022 10:13:43 GMT</span>
+<span class="na">Server</span><span class="o">:</span> <span class="l">waitress</span>
+
+<span class="p">{</span><span class="nt">&quot;BeltSpeed&quot;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Example response-content</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;BeltSpeed&quot;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;BeltSpeed&quot;</span><span class="p">:</span><span class="mf">0.218</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;BeltSpeed&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No error</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Error</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/Logo_Pandia3DV6.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Pandia 3D's Public Documentation</p>
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="peak.html">Peak Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="peak_endpoints/VolumeStart.html">VolumeStart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peak_endpoints/VolumeStop.html">VolumeStop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peak_endpoints/VolumeGet.html">VolumeGet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peak_endpoints/FlowStart.html">FlowStart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peak_endpoints/FlowPause.html">FlowPause</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peak_endpoints/FlowReset.html">FlowReset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peak_endpoints/FlowGet.html">FlowGet</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Peak Belt Speed</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="peak_endpoints/FlowGet.html" title="previous chapter">FlowGet</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Pandia 3D GmbH.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/peak_beltspeed.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
